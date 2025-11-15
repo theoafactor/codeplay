@@ -15,11 +15,15 @@ jobs:
           run: |
             echo "${{ secrets.SSH_KEY }}" >> codeplaykey.pem
             sudo chmod 400 codeplaykey.pem
-            ssh -i "codeplaykey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-44-222-169-97.compute-1.amazonaws.com && \
-            sudo apt update -y && sudo apt install ca-certificates curl -y && \
-            sudo install -m 0755 -d /etc/apt/keyrings && \
-            sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
-            sudo chmod a+r /etc/apt/keyrings/docker.asc && \
+            ssh -i "codeplaykey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-44-222-169-97.compute-1.amazonaws.com "
+
+            ## install docker 
+            # Add Docker's official GPG key:
+            sudo apt update -y
+            sudo apt install ca-certificates curl -y
+            sudo install -m 0755 -d /etc/apt/keyrings
+            sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+            sudo chmod a+r /etc/apt/keyrings/docker.asc
 
             # Add the repository to Apt sources:
             sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
@@ -28,11 +32,16 @@ jobs:
             Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
             Components: stable
             Signed-By: /etc/apt/keyrings/docker.asc
-            EOF  && \
-            sudo apt update -y && \
+            EOF
+
+            sudo apt update -y
+
             sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
-    
+            docker --version
+            "
+
+
 
     build_image: 
         runs-on: ubuntu-latest
