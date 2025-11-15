@@ -17,5 +17,12 @@ jobs:
 
         - name: "Build the image"
           run: |
-            docker build -t theofactor/codeplay:1 .
+            docker build -t theofactor/codeplay .
           
+        - name: "Login to Docker Hub"
+          run: |
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+        - name: "Push image to DockerHub"
+          run: |
+            docker push ${{ secrets.DOCKER_USERNAME }}/codeplay
