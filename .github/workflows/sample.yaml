@@ -1,0 +1,21 @@
+name: "Create simple image"
+on: 
+    push:
+        branches: 
+        - master 
+
+jobs: 
+    build_image: 
+        runs-on: ubuntu-latest
+        steps: 
+        - name: "List the directory"
+          run: |
+            ls 
+
+        - name: "checkout from dir"
+          uses: actions/checkout@v4
+
+        - name: "list the dirctory 2"
+          run: |
+            ls
+          
