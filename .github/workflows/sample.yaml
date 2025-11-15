@@ -72,11 +72,10 @@ jobs:
             sudo chmod 400 codeplaykey.pem
             ssh -i "codeplaykey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-44-222-169-97.compute-1.amazonaws.com "
             
-            sudo docker stop $( sudo docker ps -q )
-            sudo docker rm --force $( sudo docker ps -a -q )
-            sudo docker rmi $( sudo docker images -q)
+            sudo docker stop codeplay
+            sudo docker rm --force codeplay
             sudo docker pull theoafactor/codeplay
-            sudo docker run -d -p 80:80 theoafactor/codeplay
+            sudo docker run -d -p 80:80 --name codeplay theoafactor/codeplay
             "
 
 
