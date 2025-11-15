@@ -15,7 +15,7 @@ jobs:
         - name: "checkout from dir"
           uses: actions/checkout@v4
 
-        - name: "list the dirctory 2"
+        - name: "Build the image"
           run: |
-            ls
+            docker build -t theofactor/codeplay:1 .
           
