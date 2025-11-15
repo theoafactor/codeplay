@@ -39,6 +39,8 @@ jobs:
 
             sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
+            docker --version
+
 
 
     build_image: 
@@ -69,3 +71,5 @@ jobs:
             echo "${{ secrets.SSH_KEY }}" >> codeplaykey.pem
             sudo chmod 400 codeplaykey.pem
             ssh -i "codeplaykey.pem" -o StrictHostKeyChecking=no ubuntu@ec2-44-222-169-97.compute-1.amazonaws.com
+
+
