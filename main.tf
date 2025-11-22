@@ -35,6 +35,29 @@ resource "aws_security_group" "ssh" {
 
 }
 
+resource "aws_security_group" "http" {
+    name = "security_group_for-http"
+    description = "this is basic group http"
+
+    ingress {
+        description = "basic http ingress rule"
+        from_port = 80
+        to_port = 80
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    egress {
+        description = "basic http egress rule"
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+
+    }
+
+}
+
 resource "aws_key_pair" "serverkey" {
     key_name = "server"
     public_key = file("/home/astronaut/teachings/codeplay/server1.pub")
@@ -44,7 +67,7 @@ resource "aws_key_pair" "serverkey" {
 resource "aws_instance" "server1" {
   ami           = "ami-0fa3fe0fa7920f68e"
   instance_type = "t3.micro"
-  vpc_security_group_ids = [aws_security_group.ssh.id]
+  vpc_security_group_ids = [aws_security_group.ssh.id, aws_security_group.http.id]
   key_name = aws_key_pair.serverkey.key_name
 
 
