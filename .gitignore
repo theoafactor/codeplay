@@ -1,0 +1,5 @@
+terraform
+terraform.*
+server1
+.terraform
+.terraform.*
